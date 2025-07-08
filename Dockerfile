@@ -7,7 +7,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY . .
-RUN dotnet publish "Restaurante.csproj" -c Release -o /app/publish
+RUN dotnet publish "Restaurante/Restaurante.csproj" -c Release -o /app/publish
 
 # Imagen final que se ejecutará
 FROM base AS final
