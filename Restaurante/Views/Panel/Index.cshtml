@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Restaurante.Models.Reserva>
+
+@{
+    ViewData["Title"] = "Panel de Administración";
+    var mesas = ViewBag.Mesas as List<Restaurante.Models.Mesa>;
+}
+
+<div class="container py-4">
+    <h2 class="text-center mb-4">Panel de Administración</h2>
+
+    <!-- Reservas -->
+    <h4 class="mb-3">📋 Reservas</h4>
+    <div class="row g-3">
+        @foreach (var reserva in Model)
+        {
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title mb-1">@reserva.Nombre</h5>
+                        <p class="mb-1"><strong>Email:</strong> @reserva.Email</p>
+                        <p class="mb-1"><strong>Teléfono:</strong> @reserva.Telefono</p>
+                        <p class="mb-1"><strong>Fecha:</strong> @reserva.Fecha.ToShortDateString()</p>
+                        <p class="mb-1"><strong>Hora:</strong> @reserva.Hora</p>
+                        <p class="mb-1"><strong>Mesa:</strong> @reserva.Mesa?.Numero</p>
+                        <p class="mb-2"><strong>Estado:</strong> <span class="badge bg-secondary">@reserva.Estado</span></p>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="EditarReserva" asp-route-id="@reserva.Id" class="btn btn-sm btn-warning">Editar</a>
+                            <a asp-action="EliminarReserva" asp-route-id="@reserva.Id" class="btn btn-sm btn-danger">Eliminar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Mesas -->
+    <hr class="my-4" />
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">🪑 Mesas</h4>
+        <a asp-action="CrearMesa" class="btn btn-success">+ Nueva Mesa</a>
+    </div>
+    <div class="row g-3">
+        @foreach (var mesa in mesas)
+        {
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title mb-1">Mesa N° @mesa.Numero</h5>
+                        <p class="mb-1"><strong>Capacidad:</strong> @mesa.Capacidad persona(s)</p>
+                        <p class="mb-2"><strong>Estado:</strong> <span class="badge bg-info text-dark">@mesa.Estado</span></p>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="EditarMesa" asp-route-id="@mesa.Id" class="btn btn-sm btn-primary">Editar</a>
+                            <a asp-action="EliminarMesa" asp-route-id="@mesa.Id" class="btn btn-sm btn-danger">Eliminar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

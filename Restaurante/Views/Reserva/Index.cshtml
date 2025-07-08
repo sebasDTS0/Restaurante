@@ -1,0 +1,91 @@
+﻿@model Restaurante.Models.Reserva
+
+@{
+    ViewData["Title"] = "Reservar Mesa";
+    var mesas = ViewBag.MesasDisponibles;
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4" style="font-family: 'Georgia', serif;">Reserva tu Mesa</h2>
+
+    <!-- Mesas Disponibles -->
+    @if (mesas != null && mesas.Count > 0)
+    {
+        <div class="text-center mb-4">
+            <h4 class="mb-4" style="font-weight: 600;">Mesas Disponibles</h4>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 justify-content-center">
+                @foreach (var mesa in mesas)
+                {
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border rounded-4 text-center">
+                            <div class="card-body">
+                                <div class="mb-2" style="font-size: 2rem;">🍽️</div>
+                                <h5 class="card-title">Mesa Nº @mesa.Numero</h5>
+                                <p class="mb-1">Capacidad: @mesa.Capacidad personas</p>
+                                <p class="text-success fw-semibold mt-2">Disponible</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center">No hay mesas disponibles en este momento.</div>
+    }
+
+    <hr class="my-5" />
+
+    <!-- Formulario -->
+    <div class="mx-auto" style="max-width: 700px;">
+        <h4 class="text-center mb-4">Completa tus datos</h4>
+        <form asp-action="Create" method="post" class="row g-3 needs-validation" novalidate>
+            <div class="col-md-6">
+                <label asp-for="Nombre" class="form-label">Nombre</label>
+                <input asp-for="Nombre" class="form-control rounded-3" required />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Email" class="form-label">Correo Electrónico</label>
+                <input asp-for="Email" class="form-control rounded-3" type="email" required />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Telefono" class="form-label">Teléfono</label>
+                <input asp-for="Telefono" class="form-control rounded-3" required />
+                <span asp-validation-for="Telefono" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Fecha" class="form-label">Fecha</label>
+                <input asp-for="Fecha" class="form-control rounded-3" type="date" required />
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Hora" class="form-label">Hora</label>
+                <input asp-for="Hora" class="form-control rounded-3" type="time" required />
+                <span asp-validation-for="Hora" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="MesaId" class="form-label">Selecciona Mesa</label>
+                <select asp-for="MesaId" class="form-select rounded-3" asp-items="ViewBag.Mesas" required>
+                    <option disabled selected value="">Seleccione una mesa</option>
+                </select>
+                <span asp-validation-for="MesaId" class="text-danger"></span>
+            </div>
+
+            <div class="col-12 text-center mt-4">
+                <button type="submit" class="btn btn-danger px-5 py-2 rounded-pill">Reservar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

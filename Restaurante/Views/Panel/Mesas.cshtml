@@ -1,0 +1,34 @@
+﻿@model List<Restaurante.Models.Mesa>
+
+@{
+    ViewData["Title"] = "Listado de Mesas";
+}
+
+<h2>Listado de Mesas</h2>
+
+<a asp-action="CrearMesa" class="btn btn-success mb-3">+ Nueva Mesa</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Número</th>
+            <th>Capacidad</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var mesa in Model)
+        {
+            <tr>
+                <td>@mesa.Numero</td>
+                <td>@mesa.Capacidad</td>
+                <td>@mesa.Estado</td>
+                <td>
+                    <a asp-action="EditarMesa" asp-route-id="@mesa.Id" class="btn btn-primary btn-sm">Editar</a>
+                    <a asp-action="EliminarMesa" asp-route-id="@mesa.Id" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

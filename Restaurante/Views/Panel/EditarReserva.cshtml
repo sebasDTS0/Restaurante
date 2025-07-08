@@ -1,0 +1,72 @@
+﻿@model Restaurante.Models.Reserva
+
+@{
+    ViewData["Title"] = "Editar Reserva";
+}
+
+<div class="container py-4">
+    <h2 class="text-center mb-4">Editar Reserva</h2>
+
+    <form asp-action="EditarReserva" method="post" class="card shadow-sm p-4 mx-auto" style="max-width: 700px;">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label asp-for="Nombre" class="form-label">Nombre</label>
+                <input asp-for="Nombre" class="form-control" required />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Email" class="form-label">Email</label>
+                <input asp-for="Email" class="form-control" type="email" required />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Telefono" class="form-label">Teléfono</label>
+                <input asp-for="Telefono" class="form-control" required />
+                <span asp-validation-for="Telefono" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Fecha" class="form-label">Fecha</label>
+                <input asp-for="Fecha" class="form-control" type="date" required />
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Hora" class="form-label">Hora</label>
+                <input asp-for="Hora" class="form-control" type="time" required />
+                <span asp-validation-for="Hora" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="MesaId" class="form-label">Mesa</label>
+                <select asp-for="MesaId" class="form-select" asp-items="ViewBag.Mesas" required>
+                    <option disabled selected value="">Seleccione una mesa</option>
+                </select>
+                <span asp-validation-for="MesaId" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Estado" class="form-label">Estado</label>
+                <select asp-for="Estado" class="form-select" required>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="confirmada">Confirmada</option>
+                    <option value="cancelada">Cancelada</option>
+                </select>
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            <a asp-action="Index" class="btn btn-secondary ms-2">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
