@@ -15,24 +15,32 @@ namespace Restaurante.Controllers
             _db = db;
         }
 
-        // VER TODAS LAS RESERVAS
+        private bool UsuarioAutenticado()
+        {
+            return HttpContext.Session.GetString("Usuario") == "admin@tradiciones.com";
+        }
+
         public IActionResult Index()
         {
+            if (!UsuarioAutenticado()) return RedirectToAction("Login", "Cuenta");
+
             var reservas = _db.Reserva.Include(r => r.Mesa).ToList();
             ViewBag.Mesas = _db.Mesa.ToList();
             return View(reservas);
         }
 
-        // CREAR NUEVA RESERVA (GET)
         public IActionResult CrearReserva()
         {
+            if (!UsuarioAutenticado()) return RedirectToAction("Login", "Cuenta");
+
             ViewBag.Mesas = new SelectList(_db.Mesa.Where(m => m.Estado == "disponible"), "Id", "Numero");
             return View();
         }
 
-        // EDITAR RESERVA (GET)
         public IActionResult EditarReserva(int id)
         {
+            if (!UsuarioAutenticado()) return RedirectToAction("Login", "Cuenta");
+
             var reserva = _db.Reserva.Find(id);
             if (reserva == null) return NotFound();
 
@@ -40,16 +48,15 @@ namespace Restaurante.Controllers
             return View(reserva);
         }
 
-        // EDITAR RESERVA (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditarReserva(Reserva reserva)
         {
+            if (!UsuarioAutenticado()) return RedirectToAction("Login", "Cuenta");
+
             if (ModelState.IsValid)
             {
-                // Convertir Fecha a UTC
                 reserva.Fecha = DateTime.SpecifyKind(reserva.Fecha, DateTimeKind.Utc);
-
                 _db.Reserva.Update(reserva);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
@@ -59,13 +66,13 @@ namespace Restaurante.Controllers
             return View(reserva);
         }
 
-        // ELIMINAR RESERVA
         public IActionResult EliminarReserva(int id)
         {
+            if (!UsuarioAutenticado()) return RedirectToAction("Login", "Cuenta");
+
             var reserva = _db.Reserva.Find(id);
             if (reserva == null) return NotFound();
 
-            // Liberar la mesa
             var mesa = _db.Mesa.Find(reserva.MesaId);
             if (mesa != null)
             {
@@ -78,24 +85,27 @@ namespace Restaurante.Controllers
             return RedirectToAction("Index");
         }
 
-        // VER MESAS
         public IActionResult Mesas()
         {
+            if (!UsuarioAutenticado()) return RedirectToAction("Login", "Cuenta");
+
             var mesas = _db.Mesa.ToList();
             return View(mesas);
         }
 
-        // GET: Crear mesa
         public IActionResult CrearMesa()
         {
+            if (!UsuarioAutenticado()) return RedirectToAction("Login", "Cuenta");
+
             return View();
         }
 
-        // POST: Crear mesa
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult CrearMesa(Mesa mesa)
         {
+            if (!UsuarioAutenticado()) return RedirectToAction("Login", "Cuenta");
+
             if (ModelState.IsValid)
             {
                 _db.Mesa.Add(mesa);
@@ -105,19 +115,21 @@ namespace Restaurante.Controllers
             return View(mesa);
         }
 
-        // GET: Editar mesa
         public IActionResult EditarMesa(int id)
         {
+            if (!UsuarioAutenticado()) return RedirectToAction("Login", "Cuenta");
+
             var mesa = _db.Mesa.Find(id);
             if (mesa == null) return NotFound();
             return View(mesa);
         }
 
-        // POST: Editar mesa
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditarMesa(Mesa mesa)
         {
+            if (!UsuarioAutenticado()) return RedirectToAction("Login", "Cuenta");
+
             if (ModelState.IsValid)
             {
                 _db.Mesa.Update(mesa);
@@ -127,9 +139,10 @@ namespace Restaurante.Controllers
             return View(mesa);
         }
 
-        // Eliminar mesa
         public IActionResult EliminarMesa(int id)
         {
+            if (!UsuarioAutenticado()) return RedirectToAction("Login", "Cuenta");
+
             var mesa = _db.Mesa.Find(id);
             if (mesa == null) return NotFound();
 

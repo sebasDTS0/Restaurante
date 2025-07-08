@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Iniciar Sesión";
+}
+
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card shadow p-4" style="max-width: 400px; width: 100%; border-radius: 1rem;">
+        <h3 class="text-center mb-4">Panel Administrativo</h3>
+
+        @if (!string.IsNullOrEmpty(ViewBag.Error as string))
+        {
+            <div class="alert alert-danger">@ViewBag.Error</div>
+        }
+
+        <form method="post" asp-controller="Panel" asp-action="Login">
+            <div class="form-group mb-3">
+                <label for="usuario">Usuario</label>
+                <input type="email" class="form-control" id="usuario" name="usuario" placeholder="admin@tradiciones.com" required>
+            </div>
+            <div class="form-group mb-4">
+                <label for="clave">Contraseña</label>
+                <input type="password" class="form-control" id="clave" name="clave" required>
+            </div>
+            <button type="submit" class="btn btn-dark w-100 rounded-pill">Ingresar</button>
+        </form>
+    </div>
+</div>
