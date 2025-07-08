@@ -5,20 +5,19 @@ namespace Restaurante.Controllers
 {
     public class CuentaController : Controller
     {
-        private const string ADMIN_CORREO = "admin@tradiciones.com";
-        private const string ADMIN_PASSWORD = "Admin123";
-
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Login(string correo, string contrasena)
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(string usuario, string contrasena)
         {
-            if (correo == ADMIN_CORREO && contrasena == ADMIN_PASSWORD)
+            if (usuario == "admin@tradiciones.com" && contrasena == "Admin123")
             {
-                HttpContext.Session.SetString("Usuario", correo);
+                HttpContext.Session.SetString("Usuario", usuario);
                 return RedirectToAction("Index", "Panel");
             }
 

@@ -15,6 +15,7 @@ namespace Restaurante.Controllers
             _db = db;
         }
 
+        // Verifica si el usuario está autenticado (solo permite admin)
         private bool UsuarioAutenticado()
         {
             return HttpContext.Session.GetString("Usuario") == "admin@tradiciones.com";

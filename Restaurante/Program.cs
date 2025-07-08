@@ -8,7 +8,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddSession(); // ✅ Agregado
+builder.Services.AddSession(); 
 
 var app = builder.Build();
 
@@ -24,7 +24,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseSession(); // ✅ Agregado
+app.UseSession(); 
 app.UseAuthorization();
 
 app.MapControllerRoute(
