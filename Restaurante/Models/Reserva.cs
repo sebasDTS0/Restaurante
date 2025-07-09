@@ -24,7 +24,7 @@ namespace Restaurante.Models
         public string Telefono { get; set; }
 
         [Required]
-        public DateTime Fecha { get; set; }
+        public DateTime Fecha { get; set; } = DateTime.Now;
 
         [Required]
         public TimeSpan Hora { get; set; }

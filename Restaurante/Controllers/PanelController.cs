@@ -35,6 +35,7 @@ namespace Restaurante.Controllers
             if (!UsuarioAutenticado()) return RedirectToAction("Login", "Cuenta");
 
             ViewBag.Mesas = new SelectList(_db.Mesa.Where(m => m.Estado == "disponible"), "Id", "Numero");
+            var reserva = new Reserva { Fecha = DateTime.Now };
             return View();
         }
 
