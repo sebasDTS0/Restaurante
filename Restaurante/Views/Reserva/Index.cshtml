@@ -1,6 +1,7 @@
 ﻿@model Restaurante.Models.Reserva
 
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Reservar Mesa";
     var mesas = ViewBag.MesasDisponibles;
 }
@@ -8,7 +9,6 @@
 <div class="container mt-5">
     <h2 class="text-center mb-4" style="font-family: 'Georgia', serif;">Reserva tu Mesa</h2>
 
-    <!-- Mesas Disponibles -->
     @if (mesas != null && mesas.Count > 0)
     {
         <div class="text-center mb-4">
@@ -37,7 +37,6 @@
 
     <hr class="my-5" />
 
-    <!-- Formulario -->
     <div class="mx-auto" style="max-width: 700px;">
         <h4 class="text-center mb-4">Completa tus datos</h4>
         <form asp-action="Create" method="post" class="row g-3 needs-validation" novalidate>
@@ -61,7 +60,7 @@
 
             <div class="col-md-6">
                 <label asp-for="Fecha" class="form-label">Fecha</label>
-                <input asp-for="Fecha" class="form-control rounded-3" type="date" required />
+                <input asp-for="Fecha" class="form-control rounded-3" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" required />
                 <span asp-validation-for="Fecha" class="text-danger"></span>
             </div>
 
